@@ -6,15 +6,20 @@ Created on Sat Dec  3 08:38:07 2016
 @author: Mauro Ferro
 License: GNU GPLv3
 """
+# importo librerie necessarie
 import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+# display messaggio di bencenuto con istruzioni
 print 'Calcolo rata e piano di ammortamento alla francese. \n'
 print 'N.B. usare il punto come separatore dei decimali e non la virgola!!! \n'
+# elenco variabili
 importo =float(raw_input('Inserire l\'importo: '))
 tempo = int(raw_input('Inserire il numero di rate: '))
 tasso = float(raw_input('Inserire il tasso : '))
+# calcolo rata
 rata = round((1+1/((1+tasso/1200)**tempo - 1))*(tasso/1200)*importo,3)
 E = 0
 tot_I = 0
@@ -26,7 +31,7 @@ print ' *'
 print'  * Importo della rata: '+ str(rata)
 print ' *'
 print '*' 
-
+# ciclo for che genera piamo ammortamento
 numero_rate = range(0,tempo)
 for count in numero_rate:
     I = round(R *tasso/1200,2)
@@ -37,9 +42,12 @@ for count in numero_rate:
     P = tot_I + E
     plan.append([I,C,tot_I,P,E,R])
 index = ['Quota Interessi', 'Quota Capitale', 'Totale Interessi', 'Totale Pagato', 'Debito Estinto', 'Debito Residuo']
+# creo dataframe pandas
 df = pd.DataFrame(plan)
 df.columns = index
+# stampa piamo di ammortamento
 print df
+# genera grafico
 df.drop(df.columns[[0,1]], axis=1, inplace= True)
 df.plot()
 plt.xlabel('Rata n.')
